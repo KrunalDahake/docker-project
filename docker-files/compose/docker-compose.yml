@@ -1,0 +1,37 @@
+version: '2.3'
+services:
+      vproapp:
+            image: krunaldahake123/vrpofileapp:v1
+            ports: 
+              - 8080:8080
+            volumes:
+              - vproappdata:/usr/local/bin/tomcat  
+
+      vprodb:
+            image: krunaldahake123/vprofiledb:v1
+            ports:
+              - "3306:3306"
+            volumes:
+              - vprodbdata:/var/lib/mysql  
+
+      vproweb:
+            image: krunaldahake123/vrpofileweb:v1
+            ports:  
+              - "80:80"
+
+      vpromc: 
+            image: memcached
+            ports: 
+              - "11211:11211"
+
+      vprormq:
+            image: rabbitmq
+            ports:
+              - "15672:15672"
+            environment:
+             - RABBITMQ_DEFAULT_USER=guest
+             - RABBITMQ_DEFAULT_PASS=guest
+volumes:
+  - vprodbdata: {}
+  - vproappdata: {}
+               
